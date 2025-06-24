@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandsScaler</title>
+    <meta name="description" content="BrandsScaler: Revolutionary marketing, branding, and growth strategies. Partner with us to scale your brand to new heights with AI-powered insights and expert execution.">
+    <meta name="keywords" content="marketing agency, branding services, growth hacking, digital marketing, AI marketing, brand strategy, BrandsScaler, BlindTech.in">
+    <meta name="author" content="BrandsScaler & BlindTech.in">
+
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brandsscaler.com/">
+    <meta property="og:title" content="BrandsScaler - Revolutionary Marketing & Branding">
+    <meta property="og:description" content="Scale your brand with cutting-edge strategies from BrandsScaler, powered by BlindTech.in.">
+    {/* <meta property="og:image" content="https://brandsscaler.com/og-image.jpg"> */} {/* TODO: Add actual OG image URL */}
+
+    /* Twitter */
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://brandsscaler.com/">
+    <meta property="twitter:title" content="BrandsScaler - Revolutionary Marketing & Branding">
+    <meta property="twitter:description" content="Scale your brand with cutting-edge strategies from BrandsScaler, powered by BlindTech.in.">
+    {/* <meta property="twitter:image" content="https://brandsscaler.com/twitter-image.jpg"> */} {/* TODO: Add actual Twitter image URL */}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-bg': '#F7F8FA', 
+              'brand-surface': '#FFFFFF', 
+              'brand-text-primary': '#2D3748', 
+              'brand-text-secondary': '#5A6A85', 
+              'brand-primary': '#4A55A2', 
+              'brand-secondary': '#707FDD', 
+              'brand-accent': '#E95DA9',   
+              'brand-border': '#E8EBF0', 
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              heading: ['Plus Jakarta Sans', 'sans-serif'],
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 0.3s ease-out forwards',
+              'fade-in': 'fadeIn 0.5s ease-out forwards',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            },
+            boxShadow: {
+              'soft': '0 4px 12px rgba(0,0,0,0.05)',
+              'soft-lg': '0 8px 24px rgba(0,0,0,0.07)',
+            }
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.2",
+    "@google/genai": "https://esm.sh/@google/genai@^1.6.0"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "BrandsScaler",
+  "url": "https://brandsscaler.com/", // Replace with actual domain
+  "logo": "https://brandsscaler.com/logo.png", // Replace with actual logo URL
+  "description": "BrandsScaler is a revolutionary marketing, branding, and growth agency. We partner with businesses to scale their brand to new heights using AI-powered insights and expert execution. Technology powered by BlindTech.in.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-234-567-890", // Replace with actual phone
+    "contactType": "Customer Service"
+  },
+  "sameAs": [
+    // Add social media links here if available
+    // "https://www.facebook.com/BrandsScaler",
+    // "https://www.twitter.com/BrandsScaler",
+    // "https://www.linkedin.com/company/BrandsScaler"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "BrandsScaler",
+  "url": "https://brandsscaler.com/", // Replace with actual domain
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://brandsscaler.com/#/search?q={search_term_string}", // Basic search intent
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script id="page-specific-json-ld" type="application/ld+json"></script>
+<script type="module" src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-brand-bg text-brand-text-primary font-sans antialiased">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
