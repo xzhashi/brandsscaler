@@ -12,6 +12,7 @@ import PageContainer from './components/PageContainer';
 import ServiceOverviewPage from './pages/ServiceOverviewPage'; 
 import ServiceGeoPage from './pages/ServiceGeoPage'; 
 import { CityData, SimulatedCountry } from './types'; // Import CityData and SimulatedCountry
+import ScrollToTop from './components/ScrollToTop'; // Import the new component
 
 // Updated CITIES_DATA with country information
 export const CITIES_DATA: CityData[] = [
@@ -76,6 +77,7 @@ const App: React.FC = () => {
   
   return (
     <HashRouter>
+      <ScrollToTop /> {/* Add ScrollToTop here */}
       <div className="flex flex-col min-h-screen bg-brand-bg text-brand-text-primary">
         <Navbar 
           simulatedUserCountry={simulatedUserCountry}

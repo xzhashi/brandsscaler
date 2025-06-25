@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import Input, { TextArea } from '../components/common/Input';
@@ -6,6 +5,7 @@ import SectionTitle from '../components/common/SectionTitle';
 import { Icons } from '../constants';
 import ErrorMessage from '../components/ErrorMessage';
 import { setMetaTags, setPageSpecificJsonLd } from '../utils/seo';
+import AnimatedDiv from '../src/components/common/AnimatedDiv';
 
 const ContactPage: React.FC = () => {
   useEffect(() => {
@@ -19,12 +19,12 @@ const ContactPage: React.FC = () => {
       "@type": "ContactPage",
       "name": "Contact BrandsScaler",
       "description": "Reach out to BrandsScaler for marketing and branding services.",
-      "url": "https://brandsscaler.com/#/contact", // Replace with actual domain
+      "url": "https://brandsscaler.com/#/contact", 
       "mainEntity": {
         "@type": "Organization",
         "name": "BrandsScaler",
-        "telephone": "+1-234-567-890", // Replace if you have a primary contact number
-         "email": "hello@brandsscaler.com" // This is a general contact, not the submission recipient
+        "telephone": "+1-234-567-890", 
+         "email": "hello@brandsscaler.com"
       }
     });
   }, []);
@@ -50,43 +50,27 @@ const ContactPage: React.FC = () => {
     setError(null);
     setIsSubmitted(false);
     
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
         setError("Please fill out all fields.");
         setIsLoading(false);
         return;
     }
-
-    try {
-      const response = await fetch('/api/contact', { // Your backend endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', subject: '', message: ''});
-      } else {
-        const errorData = await response.json().catch(() => ({ message: 'Failed to send message. Please try again later.' }));
-        setError(errorData.message || 'An unexpected error occurred.');
-      }
-    } catch (networkError) {
-      console.error('Network error:', networkError);
-      setError('Network error. Please check your connection and try again.');
-    } finally {
-      setIsLoading(false);
-    }
+    console.log('Form data submitted:', formData);
+    setIsSubmitted(true);
+    setFormData({ name: '', email: '', subject: '', message: ''});
+    setIsLoading(false);
   };
 
   return (
-    <div className="animate-fade-in">
-      <SectionTitle title="Get In Touch" subtitle="We're excited to hear about your brand and discuss how BrandsScaler, in partnership with BlindTech.in, can help you achieve revolutionary growth. Reach out to us!" />
+    <div>
+      <AnimatedDiv animationType="fadeIn" delay={100}>
+        <SectionTitle title="Get In Touch" subtitle="We're excited to hear about your brand and discuss how BrandsScaler, in partnership with BlindTech.in, can help you achieve revolutionary growth. Reach out to us!" />
+      </AnimatedDiv>
 
       <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
-        {/* Contact Form */}
-        <div className="bg-brand-surface p-8 rounded-xl shadow-soft-lg border border-brand-border animate-fade-in-up">
+        <AnimatedDiv animationType="fadeInLeft" delay={200} className="bg-brand-surface p-8 rounded-xl shadow-soft-lg border border-brand-border">
           <h3 className="text-2xl font-semibold font-heading text-brand-text-primary mb-6">Send Us a Message</h3>
           {isSubmitted && (
             <div className="mb-4 p-4 bg-green-50 text-green-700 border border-green-300 rounded-lg animate-fade-in">
@@ -144,10 +128,9 @@ const ContactPage: React.FC = () => {
               </Button>
             </div>
           </form>
-        </div>
+        </AnimatedDiv>
 
-        {/* Contact Information */}
-        <div className="space-y-6 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+        <AnimatedDiv animationType="fadeInRight" delay={300} className="space-y-6">
           <div>
              <h3 className="text-2xl font-semibold font-heading text-brand-text-primary mb-2">Contact Details</h3>
              <p className="text-brand-text-secondary mb-6">Prefer to reach out directly? Here's how you can find us. We're eager to discuss your brand's future.</p>
@@ -171,7 +154,7 @@ const ContactPage: React.FC = () => {
               text: "123 Innovation Drive, Tech City, TX 75001 (Placeholder)"
             }
           ].map((item, index) => (
-            <div key={item.title} className="bg-brand-surface p-6 rounded-xl shadow-soft flex items-start space-x-4 border border-brand-border animate-fade-in-up" style={{animationDelay: `${0.1 * (index + 3)}s`}}>
+            <AnimatedDiv key={item.title} animationType="fadeInUp" delay={index * 100} className="bg-brand-surface p-6 rounded-xl shadow-soft flex items-start space-x-4 border border-brand-border">
               <div className="flex-shrink-0 w-10 h-10 bg-brand-primary/10 text-brand-primary rounded-full flex items-center justify-center">
                 {item.icon}
               </div>
@@ -182,9 +165,9 @@ const ContactPage: React.FC = () => {
                   <p className="text-brand-text-secondary">{item.text}</p>
                 }
               </div>
-            </div>
+            </AnimatedDiv>
           ))}
-        </div>
+        </AnimatedDiv>
       </div>
     </div>
   );

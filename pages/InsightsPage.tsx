@@ -1,14 +1,15 @@
 import React, { useState, useCallback, SVGAttributes, useEffect } from 'react';
-import { GoogleGenAI, GenerateContentResponse as SDKGenerateContentResponse } from "@google/genai"; // Use SDK type for clarity
+import { GoogleGenAI, GenerateContentResponse as SDKGenerateContentResponse } from "@google/genai";
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 import SectionTitle from '../components/common/SectionTitle';
 import { Icons } from '../constants';
-import { GroundingChunk, GeminiCandidate, GeminiContentResponse } from '../types'; // Local types for app usage
+import { GroundingChunk, GeminiCandidate, GeminiContentResponse } from '../types';
 import { setMetaTags, setPageSpecificJsonLd } from '../utils/seo';
 import LottieAnimation from '../components/LottieAnimation';
+import AnimatedDiv from '../src/components/common/AnimatedDiv';
 
 const API_KEY = process.env.API_KEY;
 
@@ -24,7 +25,6 @@ const InsightsPage: React.FC = () => {
       'Generate revolutionary marketing ideas, campaign strategies, and branding tips with BrandsScaler\'s AI Insights tool, powered by Gemini and BlindTech.in technology.',
       'AI marketing tool, marketing ideas generator, branding insights, campaign strategy AI, Gemini API marketing'
     );
-    // Initially, no article JSON-LD until content is generated
     setPageSpecificJsonLd(null);
   }, []);
 
@@ -44,11 +44,11 @@ const InsightsPage: React.FC = () => {
           "name": "BrandsScaler",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://brandsscaler.com/logo.png" // Replace with actual logo
+            "url": "https://brandsscaler.com/logo.png" 
           }
         },
         "datePublished": new Date().toISOString(),
-        "mainEntityOfPage": "https://brandsscaler.com/#/insights" // Replace with actual domain
+        "mainEntityOfPage": "https://brandsscaler.com/#/insights"
       });
     }
   }, [aiResponse, prompt]);
@@ -129,37 +129,41 @@ const InsightsPage: React.FC = () => {
   const sources = aiResponse ? extractGroundingSources(aiResponse.candidates) : [];
 
   return (
-    <div className="max-w-3xl mx-auto animate-fade-in">
-      <SectionTitle 
-        title="Unlock Revolutionary Marketing Ideas" 
-        subtitle="Tap into AI-powered brilliance with BrandsScaler AI. Ask for unique strategies, campaign ideas, or branding tips to give your business an edge. Developed with BlindTech.in."
-      />
+    <div className="max-w-3xl mx-auto">
+      <AnimatedDiv animationType="fadeIn" delay={100}>
+        <SectionTitle 
+          title="Unlock Revolutionary Marketing Ideas" 
+          subtitle="Tap into AI-powered brilliance with BrandsScaler AI. Ask for unique strategies, campaign ideas, or branding tips to give your business an edge. Developed with BlindTech.in."
+        />
+      </AnimatedDiv>
       
       <div className="grid md:grid-cols-3 gap-8 items-center mb-12">
-        <form onSubmit={handleSubmit} className="md:col-span-2 space-y-6 p-6 bg-brand-surface rounded-xl shadow-soft border border-brand-border animate-fade-in-up">
-          <Input
-            id="insight-prompt"
-            label="What marketing challenge or topic are you exploring?"
-            type="text"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="e.g., 'Innovative ways to launch a new SaaS product'"
-            disabled={isLoading}
-          />
-          <Button 
-            type="submit" 
-            isLoading={isLoading} 
-            disabled={isLoading || !prompt.trim()}
-            icon={React.cloneElement(Icons.SparklesIcon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 text-white"})}
-            className="w-full md:w-auto"
-            variant="primary"
-          >
-            {isLoading ? 'Generating...' : 'Get AI Insight'}
-          </Button>
-        </form>
-        <div className="hidden md:flex justify-center items-center animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+        <AnimatedDiv animationType="fadeInLeft" delay={200} className="md:col-span-2 space-y-6 p-6 bg-brand-surface rounded-xl shadow-soft border border-brand-border">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <Input
+              id="insight-prompt"
+              label="What marketing challenge or topic are you exploring?"
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="e.g., 'Innovative ways to launch a new SaaS product'"
+              disabled={isLoading}
+            />
+            <Button 
+              type="submit" 
+              isLoading={isLoading} 
+              disabled={isLoading || !prompt.trim()}
+              icon={React.cloneElement(Icons.SparklesIcon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 text-white"})}
+              className="w-full md:w-auto"
+              variant="primary"
+            >
+              {isLoading ? 'Generating...' : 'Get AI Insight'}
+            </Button>
+          </form>
+        </AnimatedDiv>
+        <AnimatedDiv animationType="fadeInRight" delay={300} className="hidden md:flex justify-center items-center">
             <LottieAnimation src="https://assets3.lottiefiles.com/packages/lf20_bo8vqwyw.json" style={{ maxWidth: '250px', height: '250px' }}/>
-        </div>
+        </AnimatedDiv>
       </div>
 
 
@@ -168,7 +172,7 @@ const InsightsPage: React.FC = () => {
       {isLoading && <LoadingSpinner text="Our AI is brewing some brilliant ideas..." />}
 
       {aiResponse && aiResponse.text && (
-        <div className="mt-8 p-6 bg-brand-surface rounded-xl shadow-soft-lg animate-fade-in-up border border-brand-border">
+        <AnimatedDiv animationType="fadeInUp" delay={100} className="mt-8 p-6 bg-brand-surface rounded-xl shadow-soft-lg border border-brand-border">
           <h3 className="text-2xl font-semibold font-heading text-brand-text-primary mb-4 flex items-center">
             {Icons.LightBulbIcon && React.cloneElement(Icons.LightBulbIcon as React.ReactElement<{ className?: string }>, { className: 'w-7 h-7 mr-3 text-brand-accent' })}
             Your AI-Powered Insight:
@@ -199,7 +203,7 @@ const InsightsPage: React.FC = () => {
               </ul>
             </div>
           )}
-        </div>
+        </AnimatedDiv>
       )}
     </div>
   );

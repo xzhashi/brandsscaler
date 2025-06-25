@@ -10,6 +10,9 @@ export const NAV_LINKS: NavLinkItem[] = [
   { label: 'Contact', path: '/contact' },
 ];
 
+// Icons are now designed to inherit color via `currentColor` or have a neutral default.
+// Specific colors (like brand-primary or brand-accent) should be applied via className prop when used.
+
 export const Icons = {
   BrandStrategy: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -69,14 +72,16 @@ export const Icons = {
      <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.355a7.5 7.5 0 01-4.5 0m4.5 0v.75A2.25 2.25 0 0113.5 21h-3a2.25 2.25 0 01-2.25-2.25V18m0 0A12.06 12.06 0 0018 15.75m-6 0v-1.5m0 0A6.006 6.006 0 0013.5 12c0-1.657-.672-3.157-1.756-4.244A6.006 6.006 0 0012 6c-1.657 0-3.157.672-4.244 1.756A6.006 6.006 0 006 12c0 .351.06.69.176 1.006M18 15.75c.03.05.056.1.082.15L18 15.75z" />
     </svg>
   ),
-  DataCreativeIcon: ( // Replaced with Heroicons VariableIcon
+  DataCreativeIcon: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.746 5.006a.75.75 0 01.24-.235l7.5-4.5a.75.75 0 01.764 0l7.5 4.5a.75.75 0 01.24.897l-2.25 6.75a.75.75 0 01-.703.53H5.459a.75.75 0 01-.703-.53l-2.25-6.75a.75.75 0 01.24-.897zM2.25 9.309l1.724 5.171a.75.75 0 00.703.53h14.646a.75.75 0 00.703-.53l1.724-5.171M12 12.75v6.75m0 0l-3-3m3 3l3-3M5.25 12.75h13.5" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6A2.25 2.25 0 0112.75 3.75h.5A2.25 2.25 0 0115.5 6v.5A2.25 2.25 0 0113.25 8.75v.5A2.25 2.25 0 0111 11.5h-.5A2.25 2.25 0 018.25 9.25v-.5A2.25 2.25 0 0110.5 6zM6 18.75a.75.75 0 00.75.75h10.5a.75.75 0 00.75-.75V11.25a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v7.5zM6 18.75V11.25m12 .75a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v7.5a.75.75 0 00.75.75h10.5a.75.75 0 00.75-.75V12z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 12.75H14.25M9.75 15.75H14.25" />
     </svg>
   ),
   FutureProofIcon: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 0A11.953 11.953 0 0112 2.25c1.549 0 3.024.198 4.402.564l-2.098 2.098m-3.286 3.286A11.953 11.953 0 0112 8.25c-1.549 0-3.024-.198-4.402-.564l2.098-2.098" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M15.75 3v1.5M12 18.75l-2.625-6.375L3 9.75l6.375-2.625L12 3l2.625 4.125L21 9.75l-6.375 2.625L12 18.75zM12 18.75v2.25" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 21h15" />
     </svg>
   ),
   PartnershipIcon: (
@@ -84,19 +89,21 @@ export const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-4.682 2.72a.75.75 0 01-.063-.767c.22-.472.483-.92.784-1.336A4.5 4.5 0 0112 12.75v-2.505V9.083A2.25 2.25 0 009.75 6.833H7.525A2.25 2.25 0 005.275 9.083V12.75a4.5 4.5 0 012.096 3.905c.301.416.564.864.784 1.336a.75.75 0 01-.063.767m-4.682-2.72H3.275a3 3 0 01-3-3V9.083a3 3 0 013-3h4.25a3 3 0 013 3v3.667c0 .631-.131 1.234-.373 1.789M12 12.75h6.75m-6.75 0H9.75m2.25 0v2.833M12 12.75v-2.505M12 9.083V6.833m0 0H9.75M12 6.833H14.25m-2.25 0a2.25 2.25 0 012.25-2.25h.5a2.25 2.25 0 012.25 2.25v.583c0 .631.131 1.234.373 1.789m-4.049 2.417A2.25 2.25 0 0112 15.25v2.505m0 0h2.25m-2.25 0H9.75" />
     </svg>
   ),
-  ImpactIcon: ( 
+  ImpactIcon: (
      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 16.5L7.5 12l3.75 3.75L15.75 9l3.75 3.75" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12A2.25 2.25 0 0020.25 14.25V3M3.75 3H20.25M3.75 3H6A2.25 2.25 0 018.25 5.25v11.25c0 .621.504 1.125 1.125 1.125h5.25c.621 0 1.125-.504 1.125-1.125V5.25A2.25 2.25 0 0118 3h2.25" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5h10.5M6.75 10.5h10.5M6.75 13.5h10.5" />
     </svg>
   ),
   DiscoverIcon: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM13.5 10.5h-6" />
     </svg>
   ),
-  CreateIcon: ( // Replaced with Heroicons LightBulbIcon
+  CreateIcon: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.355a7.5 7.5 0 01-4.5 0m4.5 0v.75A2.25 2.25 0 0113.5 21h-3a2.25 2.25 0 01-2.25-2.25V18m0 0A12.06 12.06 0 0018 15.75m-6 0v-1.5m0 0A6.006 6.006 0 0013.5 12c0-1.657-.672-3.157-1.756-4.244A6.006 6.006 0 0012 6c-1.657 0-3.157.672-4.244 1.756A6.006 6.006 0 006 12c0 .351.06.69.176 1.006M18 15.75c.03.05.056.1.082.15L18 15.75z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 17.5H7.5v-3.082l9.362-9.363zM16.862 4.487L19.5 7.125" />
     </svg>
   ),
   LaunchIcon: (
@@ -109,9 +116,9 @@ export const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5" />
     </svg>
   ),
-  QuoteIconLeft: ( 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M3.375 21V6.375c0-.621.504-1.125 1.125-1.125h15c.621 0 1.125.504 1.125 1.125v14.625c0 .621-.504 1.125-1.125 1.125H4.5A1.125 1.125 0 013.375 21z" />
+  QuoteIconLeft: (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8 text-brand-secondary opacity-50"> // Keep specific color here
+      <path d="M10.125 8.25V4.875c0-.621.504-1.125 1.125-1.125H13.5c1.241 0 2.25.756 2.25 2.001v1.874c0 .38-.15.719-.441.971l-3.328 2.773A1.875 1.875 0 0110.125 12V8.25zM4.875 8.25V4.875c0-.621.504-1.125 1.125-1.125H8.25c1.241 0 2.25.756 2.25 2.001v1.874c0 .38-.15.719-.441.971L6.734 11.47a1.875 1.875 0 01-1.359.53V8.25zM15.375 15.75v3.375c0 .621-.504 1.125-1.125 1.125H12c-1.241 0-2.25-.756-2.25-2.001v-1.874c0-.38.15-.719.441-.971l3.328-2.773a1.875 1.875 0 011.359-.53V15.75zm-5.25 0v3.375c0 .621-.504 1.125-1.125 1.125H6.75c-1.241 0-2.25-.756-2.25-2.001v-1.874c0-.38.15-.719.441.971l3.328-2.773a1.875 1.875 0 011.359-.53V15.75z"/>
     </svg>
   ),
 };

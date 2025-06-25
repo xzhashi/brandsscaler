@@ -23,6 +23,7 @@ export interface Testimonial {
   quote: string;
   name: string;
   company: string;
+  imageUrl?: string; // Added for new testimonial design
 }
 
 export interface GroundingChunkWeb {

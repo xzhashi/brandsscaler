@@ -1,5 +1,6 @@
 {
-  "name": "Copy of BrandsScaler AI Marketing Suite",
+  "name": "Copy 3 of Copy 2 of Copy of BrandsScaler AI Marketing Suite",
   "description": "A responsive web application for BrandsScaler, a fictional marketing agency. It features a home page, about us, services, AI-powered marketing insights (using Gemini API), and a contact page. The application showcases services, team, and provides interactive tools for users.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "prompt": ""
 }

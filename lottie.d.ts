@@ -1,3 +1,6 @@
+
+import type React from 'react';
+
 // Define the attributes for the lottie-player custom element
 // This interface can be used if preferred, but we'll inline for the IntrinsicElements example below.
 // interface LottiePlayerElementSpecificAttributes {
@@ -29,4 +32,5 @@ declare global {
   }
 }
 
-export {}; // This ensures the file is treated as an external module.
+// Export something to make it a module.
+export {};

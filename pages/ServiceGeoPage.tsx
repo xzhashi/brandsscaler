@@ -1,26 +1,23 @@
-
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import SectionTitle from '../components/common/SectionTitle';
 import Button from '../components/common/Button';
 import { setMetaTags, setPageSpecificJsonLd } from '../utils/seo';
-import { CORE_SERVICES_DATA, ServiceData } from '../data/serviceData'; // KeyAspect is implicitly part of ServiceData structure
+import { CORE_SERVICES_DATA, ServiceData } from '../data/serviceData'; 
 import { CITIES_DATA } from '../App';
-import { CityData, KeyAspectData } from '../types'; // Correct import for CityData, KeyAspectData for clarity
+import { CityData, KeyAspectData } from '../types'; 
 import LottieAnimation from '../components/LottieAnimation';
 import ErrorMessage from '../components/ErrorMessage';
-import { Icons } from '../constants'; // For fallback icons or specific service icons
+import { Icons } from '../constants'; 
+import AnimatedDiv from '../src/components/common/AnimatedDiv';
 
 interface ServiceGeoPageParams extends Record<string, string | undefined> {
   serviceSlug: string;
   cityPath: string;
 }
 
-// Use KeyAspectData from types.ts for consistency
 interface KeyAspectForPage extends KeyAspectData {}
 
-
-// Note: The component is already designed to use useParams, so no props interface needed here for serviceSlug/cityPath.
 const ServiceGeoPage: React.FC = () => {
   const { serviceSlug, cityPath } = useParams<ServiceGeoPageParams>();
 
@@ -51,7 +48,6 @@ const ServiceGeoPage: React.FC = () => {
           "name": city.name
         },
         "serviceType": service.title,
-        // Could add "offers" if there are specific packages for this service in this city
         "url": `https://brandsscaler.com/#/services/${service.slug}/${city.path}`,
       });
     } else {
@@ -61,16 +57,15 @@ const ServiceGeoPage: React.FC = () => {
 
   if (!service || !city) {
     return (
-      <div className="text-center py-20">
+      <AnimatedDiv animationType="fadeIn" className="text-center py-20">
         <ErrorMessage message={`Details for "${serviceSlug}" in "${cityPath}" not found.`} />
         <Button as={Link} to="/services" variant="primary" className="mt-8">
           Back to Services
         </Button>
-      </div>
+      </AnimatedDiv>
     );
   }
 
-  // Function to get city-specific aspect description if available
   const getCitySpecificAspectDescription = (aspect: KeyAspectForPage, serviceData: ServiceData, cityData: CityData): string => {
     if (serviceData.citySpecificAspects && serviceData.citySpecificAspects[cityData.path] && serviceData.citySpecificAspects[cityData.path][aspect.title]) {
       return serviceData.citySpecificAspects[cityData.path][aspect.title];
@@ -83,14 +78,16 @@ const ServiceGeoPage: React.FC = () => {
 
 
   return (
-    <div className="animate-fade-in">
-      <SectionTitle 
-        title={`${service.title} in ${city.name}`}
-        subtitle={`Targeted ${service.title.toLowerCase()} strategies to help your ${city.name} business dominate the local market. ${citySpecificIntro}`}
-      />
+    <div>
+      <AnimatedDiv animationType="fadeIn" delay={100}>
+        <SectionTitle 
+          title={`${service.title} in ${city.name}`}
+          subtitle={`Targeted ${service.title.toLowerCase()} strategies to help your ${city.name} business dominate the local market. ${citySpecificIntro}`}
+        />
+      </AnimatedDiv>
 
-      <div className="grid md:grid-cols-2 gap-12 items-center mb-16 md:mb-24 animate-fade-in-up">
-        <div className="order-2 md:order-1">
+      <div className="grid md:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
+        <AnimatedDiv animationType="fadeInLeft" delay={200} className="order-2 md:order-1">
           <h2 className="text-2xl lg:text-3xl font-semibold font-heading text-brand-text-primary mb-6">
             Why {city.name} Businesses Need Specialized {service.title}
           </h2>
@@ -106,62 +103,69 @@ const ServiceGeoPage: React.FC = () => {
            <Button as={Link} to="/contact" variant="primary" size="lg" className="mt-8">
             Get a Quote for {city.name}
           </Button>
-        </div>
-        <div className="order-1 md:order-2 flex justify-center items-center">
+        </AnimatedDiv>
+        <AnimatedDiv animationType="fadeInRight" delay={200} className="order-1 md:order-2 flex justify-center items-center">
           {service.lottieUrl && <LottieAnimation src={service.lottieUrl} style={{ maxWidth: '400px', height: 'auto' }} />}
-        </div>
+        </AnimatedDiv>
       </div>
       
-      <div className="my-16 md:my-24 animate-fade-in-up">
-        <h3 className="text-2xl lg:text-3xl font-semibold font-heading text-brand-text-primary mb-4 text-center">
-          Our {service.title} Focus for {city.name}
-        </h3>
-        <p className="text-brand-text-secondary text-center mb-10 max-w-2xl mx-auto">
-          We deliver comprehensive {service.title.toLowerCase()} solutions, specifically adapted for the {city.name} market, focusing on:
-        </p>
+      <AnimatedDiv as="section" className="my-16 md:my-24" animationType="fadeInUp" delay={100}>
+        <AnimatedDiv animationType="slideInBottom" delay={100}>
+          <h3 className="text-2xl lg:text-3xl font-semibold font-heading text-brand-text-primary mb-4 text-center">
+            Our {service.title} Focus for {city.name}
+          </h3>
+          <p className="text-brand-text-secondary text-center mb-10 max-w-2xl mx-auto">
+            We deliver comprehensive {service.title.toLowerCase()} solutions, specifically adapted for the {city.name} market, focusing on:
+          </p>
+        </AnimatedDiv>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {service.keyAspects.map((aspect, index) => {
             const iconToDisplay = aspect.icon || (Icons.SparklesIcon as React.ReactElement); 
-            
             return (
-              <div key={index} className="bg-brand-surface p-6 rounded-xl shadow-soft hover:shadow-soft-lg transition-shadow duration-300 border border-brand-border flex flex-col">
-                <div className="mb-4">
-                  {React.cloneElement(iconToDisplay as React.ReactElement<{ className?: string }>, { className: 'w-8 h-8 text-brand-primary' })}
+              <AnimatedDiv key={index} animationType="scaleIn" delay={index * 150}>
+                <div className="bg-brand-surface p-6 rounded-xl shadow-soft hover:shadow-soft-lg transition-shadow duration-300 border border-brand-border flex flex-col h-full">
+                  <div className="mb-4">
+                    {React.cloneElement(iconToDisplay as React.ReactElement<{ className?: string }>, { className: 'w-8 h-8 text-brand-primary' })}
+                  </div>
+                  <h4 className="text-xl font-semibold font-heading text-brand-text-primary mb-2">{aspect.title} for {city.name}</h4>
+                  <p className="text-brand-text-secondary text-sm flex-grow">
+                    {getCitySpecificAspectDescription(aspect, service, city)}
+                  </p>
                 </div>
-                <h4 className="text-xl font-semibold font-heading text-brand-text-primary mb-2">{aspect.title} for {city.name}</h4>
-                <p className="text-brand-text-secondary text-sm flex-grow">
-                  {getCitySpecificAspectDescription(aspect, service, city)}
-                </p>
-              </div>
+              </AnimatedDiv>
             );
           })}
         </div>
-      </div>
+      </AnimatedDiv>
 
       {(service.citySpecificCopy?.[city.path]?.faqs || service.genericFaqs) && (
-        <div className="my-16 md:my-24 py-12 bg-brand-primary/5 rounded-xl animate-fade-in-up border border-brand-border">
-          <h3 className="text-2xl lg:text-3xl font-semibold font-heading text-brand-text-primary mb-10 text-center">
-            {service.title} FAQs for {city.name} Businesses
-          </h3>
+        <AnimatedDiv as="section" className="my-16 md:my-24 py-12 bg-brand-primary/5 rounded-xl border border-brand-border" animationType="fadeInUp" delay={100}>
+          <AnimatedDiv animationType="slideInBottom" delay={100}>
+            <h3 className="text-2xl lg:text-3xl font-semibold font-heading text-brand-text-primary mb-10 text-center">
+              {service.title} FAQs for {city.name} Businesses
+            </h3>
+          </AnimatedDiv>
           <div className="max-w-3xl mx-auto space-y-6 px-4">
             {(service.citySpecificCopy?.[city.path]?.faqs || service.genericFaqs)?.map((faq, index) => (
-              <details key={index} className="p-4 bg-brand-surface rounded-lg shadow-soft border border-brand-border group">
-                <summary className="font-semibold font-heading text-brand-text-primary cursor-pointer flex justify-between items-center group-open:text-brand-primary">
-                  {faq.question.replace("[CityName]", city.name)}
-                  <span className="text-brand-primary group-open:rotate-180 transition-transform duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                  </span>
-                </summary>
-                <p className="text-brand-text-secondary mt-2 pt-2 border-t border-brand-border/50 text-sm leading-relaxed">
-                  {faq.answer.replace("[CityName]", city.name).replace("[ServiceLow]", service.title.toLowerCase())}
-                </p>
-              </details>
+              <AnimatedDiv key={index} animationType="fadeInUp" delay={index * 100}>
+                <details className="p-4 bg-brand-surface rounded-lg shadow-soft border border-brand-border group">
+                  <summary className="font-semibold font-heading text-brand-text-primary cursor-pointer flex justify-between items-center group-open:text-brand-primary">
+                    {faq.question.replace("[CityName]", city.name)}
+                    <span className="text-brand-primary group-open:rotate-180 transition-transform duration-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                    </span>
+                  </summary>
+                  <p className="text-brand-text-secondary mt-2 pt-2 border-t border-brand-border/50 text-sm leading-relaxed">
+                    {faq.answer.replace("[CityName]", city.name).replace("[ServiceLow]", service.title.toLowerCase())}
+                  </p>
+                </details>
+              </AnimatedDiv>
             ))}
           </div>
-        </div>
+        </AnimatedDiv>
       )}
 
-      <div className="mt-16 md:mt-24 p-8 md:p-12 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent rounded-xl shadow-soft-lg text-center animate-fade-in-up">
+      <AnimatedDiv className="mt-16 md:mt-24 p-8 md:p-12 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent rounded-xl shadow-soft-lg text-center" animationType="fadeInUp" delay={200}>
         <h3 className="text-3xl font-extrabold font-heading text-white sm:text-4xl mb-4">
           Ready to Grow Your {city.name} Business?
         </h3>
@@ -177,7 +181,7 @@ const ServiceGeoPage: React.FC = () => {
         >
             Start Your {city.name} Project Today
         </Button>
-      </div>
+      </AnimatedDiv>
     </div>
   );
 };
