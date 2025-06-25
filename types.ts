@@ -1,4 +1,5 @@
 
+
 import React from 'react'; // Ensure React is imported if ReactNode is used
 
 export interface Service { // This might be more aligned with CORE_SERVICES_DATA structure now
@@ -26,26 +27,13 @@ export interface Testimonial {
   imageUrl?: string; // Added for new testimonial design
 }
 
-export interface GroundingChunkWeb {
-  uri: string;
-  title: string;
-}
-export interface GroundingChunk {
-  web?: GroundingChunkWeb;
-}
+// Removed Gemini API related types:
+// export interface GroundingChunkWeb { uri: string; title: string; }
+// export interface GroundingChunk { web?: GroundingChunkWeb; }
+// export interface GroundingMetadata { groundingChunks?: GroundingChunk[]; }
+// export interface GeminiCandidate { groundingMetadata?: GroundingMetadata; }
+// export interface GeminiContentResponse { text: string; candidates?: GeminiCandidate[]; }
 
-export interface GroundingMetadata {
-  groundingChunks?: GroundingChunk[];
-}
-
-export interface GeminiCandidate {
-  groundingMetadata?: GroundingMetadata;
-}
-
-export interface GeminiContentResponse {
-  text: string;
-  candidates?: GeminiCandidate[];
-}
 
 // Data structures from serviceData.ts
 export interface KeyAspectData {

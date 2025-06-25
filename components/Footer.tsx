@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icons } from '../constants';
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li><Link to="/about" className="text-brand-text-secondary hover:text-brand-primary transition-colors duration-200">About Us</Link></li>
               <li><Link to="/services" className="text-brand-text-secondary hover:text-brand-primary transition-colors duration-200">Our Services</Link></li>
-              <li><Link to="/insights" className="text-brand-text-secondary hover:text-brand-primary transition-colors duration-200">AI Insights</Link></li>
+              {/* <li><Link to="/insights" className="text-brand-text-secondary hover:text-brand-primary transition-colors duration-200">AI Insights</Link></li> */} {/* Removed */}
               <li><Link to="/contact" className="text-brand-text-secondary hover:text-brand-primary transition-colors duration-200">Contact</Link></li>
             </ul>
           </div>

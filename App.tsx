@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -6,7 +7,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
-import InsightsPage from './pages/InsightsPage';
+// import InsightsPage from './pages/InsightsPage'; // Removed
 import ContactPage from './pages/ContactPage';
 import PageContainer from './components/PageContainer';
 import ServiceOverviewPage from './pages/ServiceOverviewPage'; 
@@ -108,7 +109,7 @@ const App: React.FC = () => {
               }
             />
 
-            <Route path="/insights" element={<PageContainer><InsightsPage /></PageContainer>} />
+            {/* <Route path="/insights" element={<PageContainer><InsightsPage /></PageContainer>} /> */} {/* Removed */}
             <Route path="/contact" element={<PageContainer><ContactPage /></PageContainer>} />
             
           </Routes>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
@@ -39,24 +40,35 @@ const featuredServices: Service[] = [
 
 const valuePropositions = [
   {
-    icon: Icons.SparklesIcon, 
     title: 'Ignite Your Potential',
-    description: 'Unlock groundbreaking strategies that propel your brand into the future of your industry.'
+    description: 'Unlock groundbreaking strategies that propel your brand into the future of your industry.',
+    customVisual: <img src="https://storage.brandsscaler.com/storage/v1/object/public/brandsscaler//Ignite%20potential%20Brands%20Scaler%201.gif" alt="Ignite Your Potential Animation" className="w-full h-full object-cover" />
   },
   {
-    icon: Icons.GrowthHacking, 
     title: 'Dominate Your Market',
-    description: 'We build category-defining brands that captivate audiences and drive measurable business results.'
+    description: 'We build category-defining brands that captivate audiences and drive measurable business results.',
+    customVisual: <img src="https://storage.brandsscaler.com/storage/v1/object/public/brandsscaler//Dominate%20Market%20BrandsScaler.GIF" alt="Dominate Your Market Animation" className="w-full h-full object-cover" />
   },
   {
-    icon: Icons.FutureProofIcon, 
     title: 'Innovate Fearlessly',
-    description: 'Leverage AI and human ingenuity to create revolutionary marketing solutions that set you apart.'
+    description: 'Leverage AI and human ingenuity to create revolutionary marketing solutions that set you apart.',
+    customVisual: <img src="https://storage.brandsscaler.com/storage/v1/object/public/brandsscaler//Innovate%20Brands%20Scaler%201.GIF" alt="Innovate Fearlessly Animation" className="w-full h-full object-cover" />
   }
 ];
 
-// Wrapper component for animated ValuePropositionItem (Kept as is due to its specific transition classes)
-const AnimatedValuePropositionItem: React.FC<{ vp: typeof valuePropositions[0], index: number }> = ({ vp, index }) => {
+// Define props for AnimatedValuePropositionItem
+interface AnimatedValuePropositionItemProps {
+  vp: {
+    title: string;
+    description: string;
+    customVisual?: React.ReactNode; 
+  };
+  index: number;
+}
+
+
+// Wrapper component for animated ValuePropositionItem
+const AnimatedValuePropositionItem: React.FC<AnimatedValuePropositionItemProps> = ({ vp, index }) => {
   const itemRef = useRef<HTMLDivElement>(null);
   const isVisible = useIntersectionObserver(itemRef, { 
     threshold: 0.2,
@@ -71,7 +83,11 @@ const AnimatedValuePropositionItem: React.FC<{ vp: typeof valuePropositions[0], 
       }`}
       style={{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }}
     >
-      <ValuePropositionItem icon={vp.icon} title={vp.title} description={vp.description} />
+      <ValuePropositionItem 
+        title={vp.title} 
+        description={vp.description}
+        customVisual={vp.customVisual} 
+      />
     </div>
   );
 };
@@ -144,14 +160,14 @@ const testimonials: Testimonial[] = [
     },
     {
       id: '3',
-      quote: "Their AI insights tool gave us marketing ideas we'd never have thought of. It's a game changer for our content strategy!",
-      name: "David Kim",
+      quote: "Working with BrandsScaler was a seamless experience. Their team is professional, creative, and truly dedicated to client success.",
+      name: "David Kim", // Name changed for variation
       company: "Marketing Director, QuantumLeap Inc.",
       imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     },
     {
       id: '4',
-      quote: "Working with BrandsScaler was a seamless experience. Their team is professional, creative, and truly dedicated to client success.",
+      quote: "Their focus on ROI and transparent reporting gave us the confidence we needed. BrandsScaler is a true partner.", // Quote changed for variation
       name: "Jessica Lee",
       company: "CMO, Future Gadgets Ltd.",
       imageUrl: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
@@ -337,22 +353,7 @@ const HomePage: React.FC = () => {
           </div>
         </AnimatedDiv>
         
-        <AnimatedDiv as="section" className="my-16 md:my-24" animationType="fadeInUp" delay={200}>
-            <div className="bg-gradient-to-br from-brand-primary/5 via-brand-surface to-brand-secondary/5 p-8 md:p-12 rounded-xl shadow-soft-lg text-center border border-brand-border">
-                <AnimatedDiv animationType="scaleIn" delay={100} className="mb-6 inline-block">
-                    <LottieAnimation src="https://assets9.lottiefiles.com/packages/lf20_dJJuAg23D5.json" style={{ width: '120px', height: '120px' }} />
-                </AnimatedDiv>
-                <AnimatedDiv animationType="fadeInUp" delay={200}>
-                  <h3 className="text-3xl font-bold font-heading text-brand-text-primary mb-4">Unlock AI-Powered Marketing Wisdom</h3>
-                  <p className="text-brand-text-secondary mb-6">
-                      Curious how cutting-edge AI can unearth your next big marketing win or solve complex branding challenges? Our AI Insights tool, developed with BlindTech.in, delivers actionable strategies.
-                  </p>
-                  <Button as={Link} to="/insights" variant="primary" size="lg" icon={React.cloneElement(Icons.SparklesIcon as React.ReactElement<{ className?: string }>, {className: "w-5 h-5"})}>
-                      Explore AI Insights Now
-                  </Button>
-                </AnimatedDiv>
-            </div>
-        </AnimatedDiv>
+        {/* AI Insights CTA Section Removed */}
         
         <AnimatedDiv animationType="fadeInUp" delay={200}>
           <CTABanner

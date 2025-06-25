@@ -80,6 +80,12 @@ interface CardDragState {
   dragStartPoint: { screenX: number; screenY: number; initialDeltaX: number; initialDeltaY: number } | null;
 }
 
+const avatarUrls = [
+  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+];
+
 const HeroSection: React.FC = () => {
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -130,12 +136,9 @@ const HeroSection: React.FC = () => {
             let newX = cardState.dragStartPoint.initialDeltaX + dx;
             let newY = cardState.dragStartPoint.initialDeltaY + dy;
 
-            // Optional: Boundary checks (example - keep within heroRef approximately)
-            // This is a simplified boundary check; more precise would require knowing card dimensions and initial offsets
             if (heroRef.current) {
                 // This part would need more robust logic if strict boundaries are needed, 
                 // considering initial positions and card sizes.
-                // For now, it's a free drag.
             }
 
             return {
@@ -178,19 +181,18 @@ const HeroSection: React.FC = () => {
 
   return (
     <>
-      <div className="bg-brand-bg relative overflow-hidden" ref={heroRef}>
+      <div className="bg-brand-bg relative overflow-hidden min-h-screen flex flex-col justify-center" ref={heroRef}>
         <div 
           className="absolute inset-0 z-0" 
           style={{ 
-            backgroundColor: '#F7F8FA',
-            backgroundImage: 'radial-gradient(circle, #E8EBF0 0.5px, transparent 0.5px)',
-            backgroundSize: '20px 20px',
-            opacity: 0.6
+            backgroundImage: "url('https://storage.brandsscaler.com/storage/v1/object/public/brandsscaler//BrandsScalar%20Cloud%20Hero%20Bg.webp')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
           }}
           aria-hidden="true"
         ></div>
 
-        {/* Floating Decorative UI Elements */}
         {FLOATING_ELEMENTS_CONFIG.map((config) => {
           const cardState = cardDragStates.find(s => s.id === config.id);
           if (!cardState) return null;
@@ -200,8 +202,8 @@ const HeroSection: React.FC = () => {
             ...config.initialStyle,
             transform: currentTransform,
             cursor: cardState.isDragging ? 'grabbing' : 'grab',
-            zIndex: cardState.isDragging ? 100 : 50, // Bring to front when dragging
-            userSelect: 'none', // Prevent text selection during drag
+            zIndex: cardState.isDragging ? 100 : 50, 
+            userSelect: 'none', 
           };
           
           return (
@@ -226,7 +228,7 @@ const HeroSection: React.FC = () => {
         })}
 
 
-        <div className="relative z-20 max-w-4xl mx-auto pt-12 pb-8 px-4 sm:pt-16 sm:pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20 text-center">
+        <div className="relative z-20 max-w-4xl mx-auto px-4 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-16 md:pb-20 lg:pb-24 text-center">
           <div className="mb-4 sm:mb-6 md:mb-8 inline-block p-3 bg-brand-surface rounded-2xl shadow-soft border border-brand-border/50">
             {React.cloneElement(Icons.SparklesIcon as React.ReactElement<{ className?: string }>, { className: 'w-10 h-10 sm:w-12 sm:h-12 text-brand-primary' })}
           </div>
@@ -242,17 +244,19 @@ const HeroSection: React.FC = () => {
           </p>
 
           <div className="mt-8 flex items-center justify-center space-x-3">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-secondary/20 rounded-full border-2 border-brand-surface shadow-sm">
-                {/* Placeholder for avatar images */}
-              </div>
-            ))}
+            <div className="flex -space-x-3 sm:-space-x-4">
+              {avatarUrls.map((url, index) => (
+                <img
+                  key={index}
+                  className="inline-block h-8 w-8 sm:h-10 sm:w-10 rounded-full ring-2 ring-brand-surface object-cover shadow-sm"
+                  src={url}
+                  alt={`User ${index + 1}`}
+                />
+              ))}
+            </div>
             <p className="text-sm text-brand-text-secondary font-medium">Trusted by Industry Leaders</p>
           </div>
           
-          {/* Buttons Section: Responsive behavior managed by Tailwind classes */}
-          {/* On small screens (<lg): flex-col, items-center, space-y-4. Buttons are w-full (of their container). */}
-          {/* On large screens (>=lg): flex-row, space-y-0, space-x-4, justify-center. Buttons are lg:w-auto. */}
           <div className="mt-8 sm:mt-10 max-w-sm mx-auto sm:max-w-none flex flex-col items-center space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4 lg:justify-center">
             <Button
               as={Link}
@@ -305,8 +309,6 @@ const HeroSection: React.FC = () => {
   );
 };
 
-// This declaration was already present and seems fine for Button `as` and `to` props.
-// It doesn't interfere with the new functionality.
 declare module 'react' {
     interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
       as?: React.ElementType;
