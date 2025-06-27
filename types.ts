@@ -17,6 +17,7 @@ export interface Service { // This might be more aligned with CORE_SERVICES_DATA
 export interface NavLinkItem {
   label: string;
   path: string;
+  icon?: React.ReactNode;
 }
 
 export interface Testimonial {

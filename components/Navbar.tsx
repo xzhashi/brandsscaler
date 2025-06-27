@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { NAV_LINKS, Icons } from '../constants';
 import { SimulatedCountry } from '../types';
 
@@ -12,8 +11,50 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ simulatedUserCountry, onCountryChange, availableCountries }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
   const locationDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileMenuTimerRef = useRef<number | null>(null);
+
+  // Close nav on route change
+  const location = useLocation();
+  useEffect(() => {
+    if (isOpen) {
+      handleCloseMenu();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
+  const handleToggleMenu = () => {
+    if (isOpen) {
+      handleCloseMenu();
+    } else {
+      setIsClosing(false);
+      setIsOpen(true);
+    }
+  };
+  
+  const handleCloseMenu = () => {
+    setIsClosing(true);
+    if(mobileMenuTimerRef.current) clearTimeout(mobileMenuTimerRef.current);
+    mobileMenuTimerRef.current = window.setTimeout(() => {
+      setIsOpen(false);
+    }, 400); // match animation duration
+  };
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      if(mobileMenuTimerRef.current) clearTimeout(mobileMenuTimerRef.current);
+    };
+  }, [isOpen]);
+
 
   const handleMobileCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCountryCode = event.target.value;
@@ -43,10 +84,10 @@ const Navbar: React.FC<NavbarProps> = ({ simulatedUserCountry, onCountryChange, 
     };
   }, [isLocationDropdownOpen]);
 
-  const pillLinkBaseStyle = "px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ease-in-out";
+  const pillLinkBaseStyle = "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-in-out";
   const pillLinkInactiveStyle = "text-brand-text-primary hover:bg-gray-100";
-  const pillLinkActiveStyle = "bg-brand-text-primary text-white shadow-md";
-  const ctaLinkStyle = `${pillLinkBaseStyle} ${pillLinkActiveStyle} hover:bg-opacity-90`;
+  const pillLinkActiveStyle = "bg-gradient-primary text-white shadow-md hover:brightness-110";
+  const ctaLinkStyle = `${pillLinkBaseStyle} ${pillLinkActiveStyle}`;
 
   return (
     <nav className="fixed top-0 left-0 right-0 w-full z-50">
@@ -65,29 +106,21 @@ const Navbar: React.FC<NavbarProps> = ({ simulatedUserCountry, onCountryChange, 
           <div className="hidden md:flex flex-grow justify-center">
             <div className="bg-white rounded-full p-1.5 shadow-lg flex items-center space-x-1.5">
               {NAV_LINKS.map((link) => {
-                if (link.label === 'Contact') {
+                  const isContact = link.label === 'Contact';
+                  const finalCtaStyle = isContact ? ctaLinkStyle : '';
+
                   return (
                     <NavLink
                       key={link.label}
                       to={link.path}
-                      className={ctaLinkStyle}
+                      className={({ isActive }) =>
+                        `${pillLinkBaseStyle} ${finalCtaStyle} ${isActive && !isContact ? pillLinkActiveStyle : ''} ${!isActive && !isContact ? pillLinkInactiveStyle : ''}`
+                      }
                     >
                       {link.label}
                     </NavLink>
                   );
-                }
-                return (
-                  <NavLink
-                    key={link.label}
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `${pillLinkBaseStyle} ${isActive ? pillLinkActiveStyle : pillLinkInactiveStyle}`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                );
-              })}
+                })}
             </div>
           </div>
 
@@ -99,14 +132,14 @@ const Navbar: React.FC<NavbarProps> = ({ simulatedUserCountry, onCountryChange, 
                 <button
                   type="button"
                   onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
-                  className="bg-lime-400 text-black px-3 py-1.5 rounded-full flex items-center space-x-1.5 text-sm font-medium shadow-md hover:bg-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-600 focus:ring-opacity-75 transition-colors"
+                  className="bg-gradient-secondary text-white px-3 py-1.5 rounded-full flex items-center space-x-1.5 text-sm font-medium shadow-md hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-opacity-75 transition-all duration-300"
                   aria-haspopup="true"
                   aria-expanded={isLocationDropdownOpen}
                   aria-label={`Selected location: ${simulatedUserCountry.name}. Click to change location.`}
                 >
-                  {React.cloneElement(Icons.LocationPinIcon as React.ReactElement<{ className?: string }>, { className: 'w-4 h-4 text-black' })}
+                  {React.cloneElement(Icons.LocationPinIcon as React.ReactElement<{ className?: string }>, { className: 'w-4 h-4 text-white' })}
                   <span>{simulatedUserCountry.name}</span>
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`w-3 h-3 text-black transition-transform duration-200 ${isLocationDropdownOpen ? 'rotate-180' : ''}`}>
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`w-3 h-3 text-white transition-transform duration-200 ${isLocationDropdownOpen ? 'rotate-180' : ''}`}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
                 </button>
@@ -128,78 +161,90 @@ const Navbar: React.FC<NavbarProps> = ({ simulatedUserCountry, onCountryChange, 
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="-mr-2 flex md:hidden">
+            {/* Mobile Menu Orb */}
+            <div className="md:hidden ml-4">
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleToggleMenu}
                 type="button"
-                className="bg-brand-surface/80 backdrop-blur-sm p-2 rounded-full text-brand-text-secondary hover:text-brand-primary shadow-md hover:bg-brand-primary/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-primary transition-colors duration-200"
+                className="w-14 h-14 rounded-full bg-gradient-primary text-white flex items-center justify-center shadow-lg transform active:scale-95 transition-transform duration-200"
                 aria-controls="mobile-menu"
                 aria-expanded={isOpen}
+                style={{ animation: !isOpen ? 'orb-pulse 2.5s infinite' : 'none' }}
               >
                 <span className="sr-only">Open main menu</span>
-                {!isOpen ? 
-                  React.cloneElement(Icons.MenuIcon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' }) : 
-                  React.cloneElement(Icons.CloseIcon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' })}
+                <div className="relative w-6 h-6">
+                    <span className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${isOpen && !isClosing ? 'opacity-0 rotate-45 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
+                        {React.cloneElement(Icons.MenuIcon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' })}
+                    </span>
+                    <span className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${isOpen && !isClosing ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-50'}`}>
+                        {React.cloneElement(Icons.CloseIcon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' })}
+                    </span>
+                </div>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-brand-surface border-t border-brand-border shadow-lg rounded-b-lg">
-            {NAV_LINKS.map((link) => {
-              if (link.label === 'Contact') {
-                return (
-                  <NavLink
-                    key={link.label}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full text-center px-4 py-2.5 mt-2 bg-brand-text-primary text-white rounded-md font-medium text-base hover:bg-opacity-90 transition-colors"
-                  >
-                    {link.label}
-                  </NavLink>
-                );
-              }
-              return (
+        <div 
+          id="mobile-menu"
+          className={`md:hidden fixed inset-0 bg-brand-bg/80 backdrop-blur-xl z-40 flex flex-col items-center justify-center p-8 origin-bottom-right ${isClosing ? 'animate-menu-overlay-out' : 'animate-menu-overlay-in'}`}
+        >
+          <div className="w-full max-w-xs mx-auto text-center">
+            {/* Menu Items */}
+            <div className="grid grid-cols-2 gap-6 mb-12">
+              {NAV_LINKS.map((link, index) => (
                 <NavLink
                   key={link.label}
                   to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                      isActive
-                        ? 'bg-brand-primary text-white'
-                        : 'text-brand-text-secondary hover:bg-brand-primary/10 hover:text-brand-primary'
-                    }`
-                  }
+                  className={({isActive}) => `
+                    opacity-0 animate-menu-item-in flex flex-col items-center justify-center space-y-2 group
+                    ${isActive ? 'pointer-events-none' : ''}
+                  `}
+                  style={{ animationDelay: `${100 + index * 80}ms`}}
+                  onClick={handleCloseMenu}
                 >
-                  {link.label}
+                  {({ isActive }) => (
+                    <>
+                      <div className={`w-20 h-20 rounded-2xl bg-brand-surface border shadow-soft group-hover:bg-gradient-primary group-hover:shadow-glow-primary group-hover:border-transparent transition-all duration-300 ease-in-out flex items-center justify-center ${isActive ? 'border-brand-primary' : 'border-brand-border'}`}>
+                        {link.icon && React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, {
+                          className: `w-8 h-8 transition-colors duration-300 ${isActive ? 'text-brand-primary' : 'text-brand-primary group-hover:text-white'}`
+                        })}
+                      </div>
+                      <span className={`font-medium text-sm transition-colors duration-300 ${isActive ? 'text-brand-primary' : 'text-brand-text-secondary group-hover:text-brand-primary'}`}>{link.label}</span>
+                    </>
+                  )}
                 </NavLink>
-              );
-            })}
+              ))}
+            </div>
+
             {/* Country Selector - Mobile */}
-            <div className="px-3 pt-4 pb-2">
-              <label htmlFor="mobile-country-select" className="block text-xs font-medium text-brand-text-secondary mb-1">Simulate Country:</label>
-              <select
-                id="mobile-country-select"
-                value={simulatedUserCountry.code}
-                onChange={(e) => {
-                  handleMobileCountryChange(e);
-                  setIsOpen(false); 
-                }}
-                className="block w-full pl-3 pr-8 py-2 text-base border-brand-border bg-brand-bg text-brand-text-primary rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-brand-primary focus:border-brand-primary appearance-none"
-                aria-label="Simulate User Country (For Testing)"
-              >
-                {availableCountries.map(country => (
-                  <option key={country.code} value={country.code}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
+            <div className="opacity-0 animate-menu-item-in" style={{ animationDelay: `${100 + NAV_LINKS.length * 80}ms`}}>
+              <label htmlFor="mobile-country-select" className="block text-sm font-medium text-brand-text-secondary mb-2">Your Location</label>
+              <div className="relative">
+                <select
+                  id="mobile-country-select"
+                  value={simulatedUserCountry.code}
+                  onChange={(e) => {
+                    handleMobileCountryChange(e);
+                  }}
+                  className="block w-full pl-4 pr-10 py-3 text-base border-brand-border bg-brand-surface text-brand-text-primary rounded-lg shadow-soft focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary appearance-none"
+                  aria-label="Simulate User Country"
+                >
+                  {availableCountries.map(country => (
+                    <option key={country.code} value={country.code}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-brand-text-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -21,11 +21,11 @@ const Button: React.FC<ButtonProps> = ({
   as: Component = 'button', // Default to 'button'
   ...props 
 }) => {
-  const baseStyles = "font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-75 transition-all duration-200 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-soft hover:shadow-soft-lg";
+  const baseStyles = "font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-75 transition-all duration-300 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-soft hover:shadow-soft-lg";
 
   const variantStyles = {
-    primary: 'bg-brand-primary text-white hover:bg-opacity-90 focus:ring-brand-primary',
-    secondary: 'bg-brand-secondary text-white hover:bg-opacity-90 focus:ring-brand-secondary',
+    primary: 'bg-gradient-primary text-white hover:brightness-110 focus:ring-brand-primary hover:shadow-glow-primary',
+    secondary: 'bg-gradient-secondary text-white hover:brightness-110 focus:ring-brand-accent hover:shadow-glow-secondary',
     outline: 'bg-transparent border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white focus:ring-brand-primary',
     subtle: 'bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 focus:ring-brand-primary',
   };
